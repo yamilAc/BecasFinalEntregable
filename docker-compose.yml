@@ -23,18 +23,30 @@ services:
       PORT: 5000
       DB_HOST: db
       DB_USER: root
-      DB_PASSWORD: ${MYSQL_ROOT_PASSWORD:?Define MYSQL_ROOT_PASSWORD en el entorno de despliegue}
+      DB_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       DB_NAME: ${MYSQL_DATABASE:-sistema_becas}
-      JWT_SECRET: ${JWT_SECRET:?Define JWT_SECRET en el entorno de despliegue}
+      JWT_SECRET: ${JWT_SECRET}
       JWT_EXPIRE: ${JWT_EXPIRE:-7d}
+    ports:
+      - "5000:5000"
     volumes:
       - uploads_data:/app/uploads
+    # ✅ COMANDO EXPLÍCITO PARA INICIAR
+    command: ["node", "server.js"]
 
   client:
     build: ./client
     restart: always
     depends_on:
       - backend
+    environment:
+      - REACT_APP_API_URL=http://backend:5000
+      - VITE_API_URL=http://backend:5000
+    ports:
+      - "80:80"
+      - "443:443"
+    # ✅ NGINX YA INICIA CON EL CMD EN EL DOCKERFILE
+    # No necesita command explícito
 
 volumes:
   db_data:
