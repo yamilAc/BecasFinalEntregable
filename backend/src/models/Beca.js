@@ -146,17 +146,17 @@ static async findById(id) {
     return result.affectedRows > 0;
   }
 
-  // Obtener estadísticas para dashboard
-  static async getEstadisticas() {
-    const [rows] = await pool.execute(
-      `SELECT 
-        (SELECT COUNT(*) FROM becas WHERE activo = 1) as total_becas,
-        (SELECT COUNT(*) FROM becas WHERE activo = 1 AND fecha_cierre >= CURDATE()) as becas_activas,
-        (SELECT IFNULL((SELECT COUNT(*) FROM premios_internacionales WHERE activo = 1), 0)) as total_estudiantes,
-        (SELECT COUNT(DISTINCT pais) FROM becas WHERE activo = 1) as paises_disponibles`
-    );
-    return rows[0];
-  }
+  // Obtener estadísticas para dashboard// Obtener estadísticas para dashboard
+static async getEstadisticas() {
+  const [rows] = await pool.execute(
+    `SELECT 
+      (SELECT COUNT(*) FROM becas WHERE activo = 1) as total_becas,
+      (SELECT COUNT(*) FROM becas WHERE activo = 1 AND fecha_cierre >= CURDATE()) as becas_activas,
+      (SELECT COUNT(*) FROM usuarios WHERE role_id = 3 AND activo = 1) as total_estudiantes,
+      (SELECT COUNT(DISTINCT pais) FROM becas WHERE activo = 1) as paises_disponibles`
+  );
+  return rows[0];
+}
 
   // Obtener becas por tipo (para gráfico)
   static async getBecasPorTipo() {

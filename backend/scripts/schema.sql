@@ -1,6 +1,6 @@
 -- Esquema base del Sistema de Becas Univalle
--- Las tablas practicas_internacionales y premios_internacionales se crean
--- automáticamente desde el backend (PracticaInternacional.js / PremioInternacional.js).
+-- La tabla practicas_internacionales se crea automáticamente desde el backend
+-- (PracticaInternacional.js).
 
 CREATE TABLE IF NOT EXISTS roles (
   id INT AUTO_INCREMENT PRIMARY KEY,

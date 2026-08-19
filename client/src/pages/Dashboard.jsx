@@ -4,7 +4,6 @@ import { useInView } from 'react-intersection-observer';
 import { useNavigate } from 'react-router-dom';
 import ModernPieChart from '../components/ModernPieChart';
 import MostVisitedBecas from '../components/MostVisitedBecas';
-import PremiosCarousel from '../components/PremiosCarousel';
 import becaService from '../services/becaService';
 import authService from '../services/authService';
 import { getOpportunityType, opportunityChartColors } from '../config/opportunityTypes';
@@ -98,29 +97,15 @@ const Dashboard = () => {
       
     } catch (error) {
       console.error('Error cargando datos del dashboard:', error);
-      setError('Error al cargar los datos. Por favor, recarga la pÃ¡gina.');
-      
-      // Datos de respaldo en caso de error
       setStats({
-        totalBecas: 124,
-        becasActivas: 45,
-        estudiantesBeneficiados: 892,
-        paisesDisponibles: 28
+        totalBecas: 0,
+        becasActivas: 0,
+        estudiantesBeneficiados: 0,
+        paisesDisponibles: 0
       });
-      
-      setBecasPorTipo([
-        { name: 'Beca', value: 48, color: getOpportunityType('beca').chartColor },
-        { name: 'Curso', value: 32, color: getOpportunityType('curso').chartColor },
-        { name: 'Pasantía', value: 28, color: getOpportunityType('pasantia').chartColor },
-        { name: 'Intercambio', value: 16, color: getOpportunityType('intercambio').chartColor }
-      ]);
-      
-      setConvocatorias([
-        { id: 1, titulo: "Beca Excelencia AcadÃ©mica", fecha_cierre: "2024-12-15", plazas_disponibles: 15, estado: "activa" },
-        { id: 2, titulo: "Programa Internacional", fecha_cierre: "2024-12-20", plazas_disponibles: 8, estado: "activa" },
-        { id: 3, titulo: "InvestigaciÃ³n Doctoral", fecha_cierre: "2024-12-25", plazas_disponibles: 5, estado: "proxima" },
-        { id: 4, titulo: "Movilidad Estudiantil", fecha_cierre: "2025-01-10", plazas_disponibles: 20, estado: "proxima" }
-      ]);
+      setBecasPorTipo([]);
+      setMasVisitadas([]);
+      setConvocatorias([]);
     } finally {
       setLoading(false);
     }
@@ -249,15 +234,10 @@ const Dashboard = () => {
           />
         </motion.div>
 
-        <div className="mb-10 space-y-6">
-          <PremiosCarousel ambito="internacional" />
-          <PremiosCarousel ambito="nacional" />
-        </div>
-
         {/* Stats Cards con Ã­conos profesionales */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
           <StatCard title="Total Becas" value={stats.totalBecas} color="from-[#967292] to-[#9C7A98]" delay={0.1} icon={Trophy} />
-          <StatCard title="Premios Totales" value={stats.estudiantesBeneficiados} color="from-[#614B59] to-[#6A5663]" delay={0.3} icon={Users} />
+          <StatCard title="Estudiantes Beneficiados" value={stats.estudiantesBeneficiados} color="from-[#614B59] to-[#6A5663]" delay={0.3} icon={Users} />
           <StatCard title="Total Países de Convenio" value={stats.paisesDisponibles} color="from-[#6A5663] to-[#454545]" delay={0.4} icon={Globe} />
         </div>
 
@@ -271,12 +251,7 @@ const Dashboard = () => {
             className="bg-white rounded-3xl p-8 shadow-lg border border-gray-100"
           >
             <ModernPieChart 
-              data={becasPorTipo.length > 0 ? becasPorTipo : [
-                { name: 'Beca', value: 48 },
-                { name: 'Curso', value: 32 },
-                { name: 'PasantÃ­a', value: 28 },
-                { name: 'Intercambio', value: 16 }
-              ]}
+              data={becasPorTipo}
               title="Distribución por Tipo de Beca"
               colors={coloresNivel}
             />

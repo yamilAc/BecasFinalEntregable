@@ -12,8 +12,6 @@ import Convocatorias from './pages/Convocatorias'; // ← IMPORTAR
 import AnimatedPage from './components/AnimatedPage';
 import EditarBeca from './pages/EditarBeca';
 import PracticasInternacionales from './pages/PracticasInternacionales';
-import PremiosInternacionales from './pages/PremiosInternacionales';
-import ReportesPremios from './pages/ReportesPremios';
 import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
@@ -80,14 +78,6 @@ function App() {
                 </AnimatedPage>
               </ProtectedRoute>
             } />
-            <Route path="/dashboard/reportes-premios" element={
-              <ProtectedRoute allowedRoles={['docente', 'auxiliar']}>
-                <AnimatedPage>
-                  <ReportesPremios />
-                </AnimatedPage>
-              </ProtectedRoute>
-            } />
-
             {/* Accesibles para cualquier usuario logeado (docente, auxiliar, estudiante) */}
             <Route path="/dashboard/convocatorias" element={
               <ProtectedRoute>
@@ -100,13 +90,6 @@ function App() {
               <ProtectedRoute>
                 <AnimatedPage>
                   <PracticasInternacionales />
-                </AnimatedPage>
-              </ProtectedRoute>
-            } />
-            <Route path="/dashboard/premios-internacionales" element={
-              <ProtectedRoute>
-                <AnimatedPage>
-                  <PremiosInternacionales />
                 </AnimatedPage>
               </ProtectedRoute>
             } />
