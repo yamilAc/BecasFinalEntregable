@@ -31,7 +31,6 @@ services:
       - "5000:5000"
     volumes:
       - uploads_data:/app/uploads
-    # ✅ COMANDO EXPLÍCITO PARA INICIAR
     command: ["node", "server.js"]
 
   client:
@@ -43,11 +42,5 @@ services:
       - REACT_APP_API_URL=http://backend:5000
       - VITE_API_URL=http://backend:5000
     ports:
-      - "80:80"
+      - "3000:80"  # ✅ Cambiar de 80:80 a 3000:80
       - "443:443"
-    # ✅ NGINX YA INICIA CON EL CMD EN EL DOCKERFILE
-    # No necesita command explícito
-
-volumes:
-  db_data:
-  uploads_data:
