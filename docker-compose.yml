@@ -30,7 +30,7 @@ services:
     ports:
       - "5000:5000"
     volumes:
-      - uploads_data:/app/uploads
+      - uploads_data:/app/uploads  # ✅ Este volumen debe existir
     command: ["node", "server.js"]
 
   client:
@@ -42,5 +42,9 @@ services:
       - REACT_APP_API_URL=http://backend:5000
       - VITE_API_URL=http://backend:5000
     ports:
-      - "3000:80"  # ✅ Cambiar de 80:80 a 3000:80
-      - "443:443"
+      - "3000:80"
+
+# ✅ DEFINIR LOS VOLÚMENES AQUÍ
+volumes:
+  db_data:
+  uploads_data:  # ✅ AGREGAR ESTE VOLUMEN
